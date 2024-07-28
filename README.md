@@ -1,0 +1,2 @@
+# cekilisbot
+ Basit çekiliş botu
