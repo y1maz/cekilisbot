@@ -54,7 +54,7 @@ module.exports = {
             odul,
             endDate: endDate.toISOString(),
             participants: [],
-            status: 'active' // Çekilişin aktif olduğunu işaretler
+            status: 'active'
         };
 
         const cekilisFile = path.join(__dirname, '../../Data/cekilis.json');
