@@ -44,7 +44,6 @@ module.exports = {
             new ButtonBuilder().setCustomId('cekilise_katil').setLabel('Çekilişe katıl').setStyle(ButtonStyle.Success).setEmoji('🎊')
         );
 
-        // Belirlenen kanalda çekiliş mesajını gönder
         const cekilisMesaji = await kanal.send({ embeds: [cekilisEmbed], components: [row] });
 
         await interaction.reply({content: 'Çekiliş başarıyla oluşturuldu.', ephemeral: true});
@@ -61,23 +60,20 @@ module.exports = {
         const cekilisFile = path.join(__dirname, '../../Data/cekilis.json');
         fs.writeFileSync(cekilisFile, JSON.stringify(cekilisData, null, 2));
 
-        // Çekilişi bitirme işlemi
         setTimeout(async () => {
             const updatedCekilisData = JSON.parse(fs.readFileSync(cekilisFile, 'utf-8'));
 
             if (updatedCekilisData.status !== 'active') {
-                return; // Eğer çekiliş zaten bitmişse işlem yapma
+                return;
             }
 
             const participants = updatedCekilisData.participants;
             if (participants.length === 0) {
                 await cekilisMesaji.edit({ content: 'Çekilişe kimse katılmadı.', embeds: [], components: [] });
                 
-                // Çekilişi bitmiş olarak işaretle
                 updatedCekilisData.status = 'closed';
                 fs.writeFileSync(cekilisFile, JSON.stringify(updatedCekilisData, null, 2));
                 
-                // Çekiliş logunu ekle
                 const logEntry = {
                     type: 'end',
                     messageId: updatedCekilisData.messageId,
@@ -119,12 +115,10 @@ module.exports = {
                 allowedMentions: { users: [winnerId] },
             });
 
-            // Çekilişi bitmiş olarak işaretle
             updatedCekilisData.status = 'closed';
             updatedCekilisData.winnerId = winnerId;
             fs.writeFileSync(cekilisFile, JSON.stringify(updatedCekilisData, null, 2));
 
-            // Çekiliş logunu ekle
             const logEntry = {
                 type: 'end',
                 messageId: updatedCekilisData.messageId,
