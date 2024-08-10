@@ -20,7 +20,6 @@ module.exports = {
                 }
 
                 try {
-                    // Katılımı işleyin
                     const accountCreationDate = interaction.user.createdAt;
                     const currentDate = new Date();
                     const accountAgeInDays = Math.floor((currentDate - accountCreationDate) / (1000 * 60 * 60 * 24));
@@ -34,7 +33,6 @@ module.exports = {
                         cekilisData.participants.push(interaction.user.id);
                         fs.writeFileSync(cekilisFile, JSON.stringify(cekilisData, null, 2));
                         
-                        // Embed mesajını güncelleyin
                         const updatedEmbed = new EmbedBuilder()
                             .setTitle('Çekiliş başladı!')
                             .setDescription(`
